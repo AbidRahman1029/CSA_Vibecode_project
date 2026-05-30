@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Casino — Blackjack</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="page-actions">
+                <a class="back-link" href="index.html">← Back to Lobby</a>
+            </div>
+            <h1>Blackjack</h1>
+        </header>
+
+        <main class="game-board">
+            <div class="player-area">
+                <div class="player player-1" id="player">
+                    <div class="player-info">
+                        <h3>You</h3>
+                        <div class="chips">$<span id="player-chips">1000</span></div>
+                    </div>
+                    <div class="player-cards" id="player-cards"></div>
+                    <div class="player-bet" id="player-score">Score: <span id="player-score-val">0</span></div>
+                </div>
+
+                <div class="player player-2" id="dealer">
+                    <div class="player-info">
+                        <h3>Dealer</h3>
+                        <div class="chips">House</div>
+                    </div>
+                    <div class="player-cards" id="dealer-cards"></div>
+                    <div class="player-bet" id="dealer-score">Score: <span id="dealer-score-val">--</span></div>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <div class="betting-controls">
+                    <div class="bet-amount">
+                        <label for="bet-input">Bet:</label>
+                        <input type="number" id="bet-input" min="1" value="10">
+                    </div>
+                    <div class="game-actions">
+                        <button id="new-game-btn" class="btn btn-new-game">New Game</button>
+                        <button id="bet-all-btn" class="btn btn-all-in">Bet All</button>
+                        <button id="deal-btn" class="btn btn-deal" disabled>Deal</button>
+                        <button id="hit-btn" class="btn btn-call" disabled>Hit</button>
+                        <button id="stand-btn" class="btn btn-raise" disabled>Stand</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-log">
+                <h3>Game Log</h3>
+                <div id="log-content"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="blackjack.js"></script>
+</body>
+</html>

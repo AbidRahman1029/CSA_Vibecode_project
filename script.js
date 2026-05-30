@@ -6,7 +6,7 @@ class PokerGame {
         this.communityCards = [];
         this.pot = 0;
         this.currentRound = 'Pre-Flop';
-        this.playerChips = 1000;
+        this.playerChips = this.loadSharedChips();
         this.computerChips = 1000;
         this.currentBet = 0;
         this.playerBet = 0;
@@ -50,6 +50,16 @@ class PokerGame {
             const j = Math.floor(Math.random() * (i + 1));
             [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
         }
+    }
+
+    loadSharedChips() {
+        const stored = localStorage.getItem('casinoPlayerChips');
+        const chips = stored !== null ? Number(stored) : 1000;
+        return Number.isFinite(chips) && chips >= 0 ? Math.floor(chips) : 1000;
+    }
+
+    saveSharedChips() {
+        localStorage.setItem('casinoPlayerChips', String(this.playerChips));
     }
 
     dealCards() {
@@ -689,7 +699,9 @@ class PokerGame {
     }
 
     evaluateHand(cards) {
-        if (cards.length < 5) return 0;
+        if (cards.length < 5) {
+            return this.evaluatePartialHand(cards);
+        }
         
         // Sort cards by value
         cards.sort((a, b) => b.value - a.value);
@@ -705,6 +717,22 @@ class PokerGame {
         if (this.isTwoPair(cards)) return 3;
         if (this.isOnePair(cards)) return 2;
         return 1; // High card
+    }
+
+    evaluatePartialHand(cards) {
+        if (cards.length === 0) return 0;
+
+        const groups = this.groupByRank(cards);
+        const counts = Object.values(groups).map(group => group.length).sort((a, b) => b - a);
+        const pairCount = counts.filter(count => count === 2).length;
+
+        if (counts[0] >= 4) return 8;
+        if (counts[0] === 3) return 4;
+        if (pairCount >= 2) return 3;
+        if (pairCount === 1) return 2;
+        if (cards.length >= 3 && this.isFlush(cards)) return 6;
+        if (cards.length >= 3 && this.isStraight(cards)) return 5;
+        return 1;
     }
 
     isRoyalFlush(cards) {
@@ -810,11 +838,6 @@ class PokerGame {
         }
         
         const allCards = [...this.playerHand, ...this.communityCards];
-        if (allCards.length < 5) {
-            document.getElementById('hand-description').textContent = 'Waiting for more cards...';
-            return;
-        }
-        
         const score = this.evaluateHand(allCards);
         const description = this.getHandDescription(score);
         document.getElementById('hand-description').textContent = description;
@@ -849,6 +872,7 @@ class PokerGame {
             document.getElementById('bet-input').min = this.currentBet + 1;
         }
         document.getElementById('bet-input').max = this.playerChips;
+        this.saveSharedChips();
     }
 
     enableBettingControls() {

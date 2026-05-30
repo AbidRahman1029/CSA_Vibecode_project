@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Casino — Roulette</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="page-actions">
+                <a class="back-link" href="index.html">← Back to Lobby</a>
+            </div>
+            <h1>Roulette</h1>
+            <div class="game-info roulette-info">
+                <span class="chips">Chips: $<span id="player-chips">1000</span></span>
+                <span class="round">Bet Placed: $<span id="total-bet">0</span></span>
+            </div>
+        </header>
+
+        <main class="game-board roulette-board-layout">
+            <section class="roulette-main">
+                <div class="roulette-wheel-container">
+                    <div class="roulette-wheel" id="roulette-wheel">
+                        <div class="wheel-numbers"></div>
+                        <div class="wheel-inner">
+                            <div class="wheel-ball" id="wheel-ball"></div>
+                            <div class="wheel-needle"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="roulette-betting">
+                    <div class="bet-amount roulette-bet-controls">
+                        <label for="bet-input">Bet amount</label>
+                        <input type="number" id="bet-input" min="1" value="10">
+                    </div>
+                    <p class="roulette-help">Click a number on the board to place a physical chip. Hover to preview the chip amount.</p>
+                    <div class="roulette-board" id="roulette-board"></div>
+                    <div class="roulette-actions">
+                        <button id="spin-btn" class="btn btn-deal">Spin Wheel</button>
+                        <button id="clear-btn" class="btn btn-check">Clear Bets</button>
+                    </div>
+                </section>
+            </section>
+
+            <section class="roulette-info-section">
+                <div class="roulette-result">
+                    <span>Last spin:</span>
+                    <strong id="spin-result">--</strong>
+                </div>
+                <div class="game-log roulette-log">
+                    <h3>Game Log</h3>
+                    <div id="log-content"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="roulette.js"></script>
+</body>
+</html>
